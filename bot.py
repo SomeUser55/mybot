@@ -1,27 +1,16 @@
 
 import logging
-import os
-import os
-from pathlib import Path
+
+import settings
+
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-PARENT_DIR = Path(__file__).parent
-LOG_DIR = os.path.join(PARENT_DIR, 'log')
 
-log_file_path = os.path.join(LOG_DIR, 'bot.log')
 logging.basicConfig(
-    filename=log_file_path,
+    filename=settings.log_file_path,
     level=logging.INFO,    
 )
-
-TOKEN = os.environ['TOKEN']
-
-
-PROXY = {
-    'proxy_url': 'socks5://t2.learn.python.ru:1080',
-    'urllib3_proxy_kwargs': {'username': 'learn', 'password': 'python'},
-}
 
 
 def greet_user(update, context):
@@ -37,9 +26,9 @@ def talk_to_me(update, context):
 
 def main():
     mybot = Updater(
-        TOKEN,
+        settings.TOKEN,
         use_context=True,
-        request_kwargs=PROXY,
+        request_kwargs=settings.PROXY,
     )
 
     dp = mybot.dispatcher
